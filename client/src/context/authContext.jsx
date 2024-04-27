@@ -10,13 +10,18 @@ export const AuthContextProvider = ({children}) =>{
     const login = async(input) =>{
         
         const res = await axios.post("http://localhost:8800/api/auth/login", input, { withCredentials: true });
-        //console.log(input)
+        console.log("inside authcontext login")
+        console.log(res)
+        
         setCurrentUser(res.data)
 
     }; 
 
     const logout = async(input) =>{
-        await axios.post("http://localhost:8800/api/auth/logout");
+        //console.log(input)
+        const res = await axios.post("http://localhost:8800/api/auth/logout",null,{ withCredentials: true });
+        // console.log("inside authcontext logout")
+         //console.log(res)
         setCurrentUser(null)
 
     };

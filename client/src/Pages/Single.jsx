@@ -38,7 +38,7 @@ const Single = () => {
 
     const handleDelete = async () => {
         try{
-            await axios.delete(`http://localhost:8800/api/posts/${postId}`);
+            await axios.delete(`http://localhost:8800/api/posts/${postId}`,{ withCredentials: true });
             navigate("/")
 
         }catch(err){
@@ -57,6 +57,8 @@ const Single = () => {
                     <span>{post?.username}</span>
                     <p>Posted {moment(post.date).fromNow()}</p>
                 </div>
+                {console.log("singlejsx")}
+                {console.log(currentUser.username)}
                 {currentUser.username === post.username && (
                 <div className="edit">
                     <Link to={`/write?edit=2`} state={post}>

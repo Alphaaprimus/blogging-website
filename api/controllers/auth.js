@@ -45,15 +45,8 @@ export const register = (req,res) =>{
 };
 
 export const login= (req,res) =>{
-
-    
-
     //CHECK USER
-    
-
     const q = "SELECT * FROM users WHERE username = $1"
-
-
     
 
     db.query(q,[req.body.username], (err,data) =>{
@@ -70,8 +63,7 @@ export const login= (req,res) =>{
        if(!isPasswordCorrect) return res.status(400).json("Wrong username and password")
   
        const token = jwt.sign({id:data.rows[0]?.id},"jwtkey");
-    //    console.log("this is token")
-        //console.log(token)
+
        const {password, ...other} = data.rows[0] 
        //console.log(data.rows[0])
 
@@ -83,22 +75,30 @@ export const login= (req,res) =>{
         httpOnly: true,
 
        }).status(200).json(other)
-       
-       
-
 
     });
 
 };
 
 export const logout = (req,res) =>{
-    console.log("inside logout")
+
+    // console.log("request logout");
+    // console.log(req)
+    // console.log("reponse logout");
+    // console.log(res)
+
 
     res.clearCookie("access_token",{
         sameSite:"none",
         secure:true
     }).status(200).json("User has been logged out")
     
+    // res.cookie("access_token", null,{
+    //     //maxAge: oneDayInSeconds,
+    //     httpOnly: true,
+
+    //    }).status(200).json("user maa chuda")
+
 
 }
 

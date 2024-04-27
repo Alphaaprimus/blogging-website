@@ -36,17 +36,17 @@ const Write = () => {
         try{
             state ? await axios.put(`http://localhost:8800/api /posts/${state.id}`,{
                 title,
-                descript:value,
+                descript,
                 cat,
                 img:file ? imgUrl : ""
-            }) : await axios.post(`http://localhost:8800/api /posts/`,{
+            },{ withCredentials: true }) : await axios.post(`http://localhost:8800/api /posts/`,{
                 title,
-                descript:value,
+                descript,
                 cat,
                 img:file ? imgUrl : "",
                 date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
 
-        })
+        },{ withCredentials: true })
     }catch(err){
             console.log(err)
 

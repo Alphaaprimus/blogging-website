@@ -49,7 +49,7 @@ export const addPost = (req,res) =>{
     jwt.verify(token,"jwtkey",(err, userInfo) => {
         if(err) return res.status(403).json("token is not valid")
 
-        const q = "INSERT INTO posts (`title`,`descript`,`img`,`cat`,`date`,`uid`) VALUES ($1,$2,$3,$4,$5,$6))"
+        const q = "INSERT INTO posts (title,descript,img,cat,date,uid) VALUES ($1,$2,$3,$4,$5,$6))"
 
         const values = [
             req.body.title,
@@ -70,16 +70,17 @@ export const addPost = (req,res) =>{
 
 export const deletePost = (req,res) =>{
     const token = req.cookies.access_token
-    console.log(token)
-    if(!token) return r9es.status(401).json("not authenticated")
+    //console.log(req)
+    if(!token) return res.status(401).json("not authenticated")
 
     jwt.verify(token,"jwtkey",(err, userInfo) => {
         if(err) return res.status(403).json("token is not valid")
 
         const postId = req.params.id
-        const q = "DELETE FROM posts WHERE `id` = $1 AND `uid` = $2 "
+        const q = "DELETE FROM posts WHERE id = $1 AND uid = $2 "
 
         db.query(q,[postId,userInfo.id], (err,data) => {
+            console.log(err)
             if(err) return res.status(403).json("you can delete only your post")
 
             return res.json("post  has been deleted")
@@ -98,7 +99,7 @@ export const updatePost = (req,res) =>{
 
         const postId = req.params.id
 
-        const q = "UPDATE posts SET `title`=$1,`descript`=$2,`img`=$3,`cat`=$4 WHERE `id` = $5 AND `uid` = $5"
+        const q = "UPDATE posts SET title=$1,descript=$2,img=$3,cat=$4 WHERE id = $5 AND uid = $6"
 
         const values = [
             req.body.title,

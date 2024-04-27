@@ -26,7 +26,7 @@ const Layout = () => {
     </>
   );
 };
-console.log("hello git")
+
 const router = createBrowserRouter([
   {
     path: "/",
